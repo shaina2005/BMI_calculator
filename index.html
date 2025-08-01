@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="bmi.css" />
+    <script src="bmi.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="nav-logo">
+      <div class="hamburger" onclick="toggleMenu()">☰</div>
+      <div class="nav-logo-text" id="pagetitle">BMI Calculator</div>
+    </div>
+    <div class="layout-container">
+      <nav id="navLinks">
+        <div class="nav-links">
+          <a href="index.html">Calculator</a>
+          <a href="about.html">About</a>
+          <a href="diet.html">Diet Plan</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </nav>
+      <section>
+        <div class="main-section">
+          <div class="main-heading">Know Your Body Better: Check Your BMI</div>
+          <div class="form-container">
+            <div class="form-left">
+              <form onsubmit="calculateBmi(event)">
+                <!-- gender-container -->
+                <div class="gender-container">
+                  <div class="image1">
+                    <img src="images/boy_avatar.jpg" />
+                  </div>
+                  <div class="image2">
+                    <img src="images/girl_avatar.jpg" />
+                  </div>
+                </div>
+                <!-- gender-toggle -->
+                <div class="gender-toggle">
+                  <input
+                    type="radio"
+                    id="male"
+                    value="male"
+                    name="gender"
+                    checked
+                  />
+                  <label for="male">Male</label>
+
+                  <input
+                    type="radio"
+                    id="female"
+                    value="female"
+                    name="gender"
+                  />
+                  <label for="female">Female</label>
+                </div>
+                <!-- input classes -->
+                <div class="inputs">
+                  <!-- age  -->
+                  <label for="age">Age</label>
+                  <input
+                    type="number"
+                    id="age"
+                    style="margin-left: 22px"
+                    required
+                  /><br />
+                  <!-- height  -->
+                  <label for="height">Height</label>
+                  <input
+                    type="number"
+                    id="height"
+                    required
+                    step="any"
+                    required
+                  />
+                  <select id="height_unit">
+                    <option value="cm">cm</option>
+                    <option value="m">m</option></select
+                  ><br />
+                  <!-- weight  -->
+                  <label for="weight">weight</label>
+                  <input
+                    type="number"
+                    id="weight"
+                    required
+                    step="any"
+                    required
+                  />
+                  <select id="weight_unit">
+                    <option value="kg">kg</option>
+                    <option value="lbs">lbs</option></select
+                  ><br />
+                  <!-- buttons -->
+                  <div class="button-container">
+                    <button type="submit">Calculate</button>
+
+                    <button type="button" id="reset" style="width: 80px">
+                      Clear
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="form-right">
+              <div class="bmi-container">
+                <div class="bmi-progress" id="bmiProgress">
+                  <span id="bmiValue">0.0</span>
+                </div>
+              </div>
+              <div class="bmiresult-container">
+                <div class="bmiresult" id="bmiresult" type="hidden"></div>
+              </div>
+              <!-- weight range chart  -->
+              <div class="weightbox">
+                <div class="weightcolor">
+                  <div class="color-label" id="underweight">
+                    <div class="label-left">
+                      <div
+                        class="colorcircle"
+                        style="background-color: #ffd700"
+                      ></div>
+                      <span>Underweight</span>
+                    </div>
+                    <div class="label-right">&lt; 18.5</div>
+                  </div>
+
+                  <div class="color-label" id="normalweight">
+                    <div class="label-left">
+                      <div
+                        class="colorcircle"
+                        style="background-color: #4cd964"
+                      ></div>
+                      <span>Normal Weight</span>
+                    </div>
+                    <div class="label-right">18.5–24.9</div>
+                  </div>
+
+                  <div class="color-label" id="overweight">
+                    <div class="label-left">
+                      <div
+                        class="colorcircle"
+                        style="background-color: #f4c430"
+                      ></div>
+                      <span>Overweight</span>
+                    </div>
+                    <div class="label-right">25–29.9</div>
+                  </div>
+
+                  <div class="color-label" id="obese1">
+                    <div class="label-left">
+                      <div
+                        class="colorcircle"
+                        style="background-color: #ff7f50"
+                      ></div>
+                      <span>Obese I</span>
+                    </div>
+                    <div class="label-right">30–34.9</div>
+                  </div>
+
+                  <div class="color-label" id="obese2">
+                    <div class="label-left">
+                      <div
+                        class="colorcircle"
+                        style="background-color: #ff3b30"
+                      ></div>
+                      <span>Obese II</span>
+                    </div>
+                    <div class="label-right">35–39.9</div>
+                  </div>
+
+                  <div class="color-label" id="obese3">
+                    <div class="label-left">
+                      <div
+                        class="colorcircle"
+                        style="background-color: #990000"
+                      ></div>
+                      <span>Obese III</span>
+                    </div>
+                    <div class="label-right">40+</div>
+                  </div>
+                </div>
+              </div>
+              <div class="healthy-range">
+                <div id="healthyRange" class="healthy-range-text"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- about bmi  -->
+        <div class="about-bmi">
+          <div class="what_is_bmi">
+            <h2>What is BMI?</h2>
+            <p>
+              BMI (Body Mass Index) is a value derived from your height and
+              weight. It is used to classify underweight, normal weight,
+              overweight, and obesity in adults.
+            </p>
+            <p>
+              The formula for BMI is:
+              <strong>BMI = weight (kg) / height² (m²)</strong>
+            </p>
+            <p>
+              It’s a simple way to assess if your body weight is in a healthy
+              range. However, BMI does not account for muscle mass, bone
+              density, or overall body composition.
+            </p>
+          </div>
+
+          <table class="bmi-table">
+            <tr>
+              <th>Category</th>
+              <th>BMI Range</th>
+              <th>Indicator</th>
+            </tr>
+            <tr>
+              <td>Underweight</td>
+              <td>&lt; 18.5</td>
+              <td>May indicate nutritional deficiency or health issues</td>
+            </tr>
+            <tr>
+              <td>Normal</td>
+              <td>18.5 – 24.9</td>
+              <td>Considered healthy for most adults</td>
+            </tr>
+            <tr>
+              <td>Overweight</td>
+              <td>25 – 29.9</td>
+              <td>Risk of developing health problems</td>
+            </tr>
+            <tr>
+              <td>Obese I</td>
+              <td>30 - 34.9</td>
+              <td>Increased risk of health problems</td>
+            </tr>
+            <tr>
+              <td>Obese II</td>
+              <td>34.9 - 39.9</td>
+              <td>High risk of serious health conditions</td>
+            </tr>
+            <tr>
+              <td>Obese III</td>
+              <td>40 or more</td>
+              <td>Extremely high risk; medical supervision advised</td>
+            </tr>
+          </table>
+
+          <!-- risks of being overweight  -->
+          <div class="risks">
+            <h2>Risks of being Overweight</h2>
+            Being overweight increases the risk of a number of serious diseases
+            and health conditions. Below is a list of said risks, according to
+            the Centers for Disease Control and Prevention (CDC)
+            <ul>
+              <li>
+                <strong>Heart disease</strong> – Too much fat can raise blood
+                pressure and cholesterol
+              </li>
+              <li>
+                <strong>Type 2 diabetes</strong> – Body has trouble using
+                insulin properly
+              </li>
+              <li>
+                <strong>Joint pain</strong> – Extra weight puts pressure on
+                knees, hips, and back
+              </li>
+              <li>
+                <strong>Sleep problems</strong> – Fat near the neck can block
+                breathing during sleep
+              </li>
+              <li>
+                <strong>Fatty liver</strong> – Fat builds up in the liver and
+                can damage it
+              </li>
+              <li>
+                <strong>Cancer risk</strong> – Higher chance of getting breast,
+                colon, or kidney cancer
+              </li>
+              <li>
+                <strong>Mental health</strong> – Can cause sadness, stress, and
+                low confidence
+              </li>
+              <li>
+                <strong>Gallbladder issues</strong> – More likely to get stones
+                or swelling in the gallbladder
+              </li>
+              <li>
+                <strong>Tiredness</strong> – Extra weight can make you feel
+                tired quickly
+              </li>
+              <li>
+                <strong>Less movement</strong> – Harder to walk, run, or stay
+                active for long
+              </li>
+            </ul>
+            <h2>Risks of being Underweight</h2>
+            Being underweight can lead to several health problems and
+            deficiencies. Below is a list of potential risks, as recognized by
+            health experts and medical organizations
+            <ul>
+              <li>
+                <strong>Weak immunity</strong> – Body can't fight infections
+                easily
+              </li>
+              <li><strong>Low energy</strong> – Often feel tired or weak</li>
+              <li>
+                <strong>Bone problems</strong> – Higher risk of weak bones or
+                fractures
+              </li>
+              <li>
+                <strong>Hair loss</strong> – Hair may thin or fall due to lack
+                of nutrients
+              </li>
+              <li>
+                <strong>Fertility issues</strong> – Can cause irregular periods
+                or problems with pregnancy
+              </li>
+              <li>
+                <strong>Growth issues</strong> – Slower growth in teens or
+                children
+              </li>
+              <li>
+                <strong>Skin problems</strong> – Dry or unhealthy skin due to
+                poor nutrition
+              </li>
+              <li>
+                <strong>Cold sensitivity</strong> – Feel cold more often due to
+                low body fat
+              </li>
+              <li>
+                <strong>Muscle loss</strong> – Body may start breaking down
+                muscle for energy
+              </li>
+              <li>
+                <strong>Organ damage</strong> – In extreme cases, can affect
+                heart or kidneys
+              </li>
+            </ul>
+            <h2>LImitations of BMI</h2>
+            Although BMI is a useful tool for estimating healthy body weight, it
+            has several limitations:
+            <ul>
+              <li>
+                <strong>Only an estimate</strong> – BMI doesn’t directly measure
+                body fat
+              </li>
+              <li>
+                <strong>Ignores body composition</strong> – Doesn’t show muscle,
+                fat, or bone differences
+              </li>
+              <li>
+                <strong>May misclassify muscular people</strong> – Athletes may
+                appear overweight due to muscle mass
+              </li>
+              <li>
+                <strong>Doesn’t account for age</strong> – Older adults may have
+                more fat than younger people with same BMI
+              </li>
+              <li>
+                <strong>Gender differences</strong> – Women naturally have more
+                fat than men at the same BMI
+              </li>
+              <li>
+                <strong>Ethnic variations</strong> – Health risks at certain BMI
+                levels vary between ethnic groups
+              </li>
+              <li>
+                <strong>Activity level not included</strong> – Inactive people
+                with normal BMI may still be unhealthy
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
