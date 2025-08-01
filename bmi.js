@@ -43,7 +43,7 @@ function calculateBmi() {
   const height = parseFloat(document.getElementById("height").value);
   const weight = parseFloat(document.getElementById("weight").value);
 
-  const gender = document.querySelector('input[name="gender":checked').value;
+const gender = document.querySelector('input[name="gender"]:checked').value;
   
 
   const height_unit = document.getElementById("height_unit").value;
