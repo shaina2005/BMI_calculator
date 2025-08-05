@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button style="padding: 10px; font-size: 20px" onclick="testApi()">
+      Test api
+    </button>
+
+    <script>
+      function testApi() {
+        const apiKey = "3cee8f2b15954c7e93629fb48f7d656f";
+        const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=2000&apiKey=${apiKey}`;
+
+        fetch(url)
+          .then((res) => {
+            if (res.ok) {
+              return res.json();
+            } else {
+              throw new Error("API request failed");
+            }
+          })
+          .then((data) => {
+            alert("API working, check console");
+            console.log(data);
+          })
+          .catch((error) => {
+            console.log("Error caught:", error);
+          });
+      }
+    </script>
+  </body>
+</html>
