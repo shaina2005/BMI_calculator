@@ -98,12 +98,11 @@ nav a:hover {
   font-size: 2.5rem;
   text-align: center;
   font-weight: 700;
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   color: #2c3e50; /* deep neutral grey */
   margin-top: 20px;
   letter-spacing: 1px;
 }
-
 
 /* form */
 .form-container {
@@ -275,7 +274,6 @@ nav a:hover {
   justify-content: center;
   height: auto;
   flex-direction: row;
-
 }
 
 .weightcolor {
@@ -310,12 +308,12 @@ nav a:hover {
 
 .color-label.active {
   background-color: #a3b18a;
-     padding: 7px;
+  padding: 7px;
   border-radius: 10px;
   width: 100%;
 }
-.color-label.active .colorcircle{
-  width:15px;
+.color-label.active .colorcircle {
+  width: 15px;
   height: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -329,6 +327,17 @@ nav a:hover {
   text-align: center;
   font-weight: bold;
 }
+/* meal plan button  */
+.dietplan {
+  padding: 5px;
+  background-color: #437057;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  color: rgb(205, 205, 160);
+  font-weight: 700;
+  display: none;
+}
 
 .about-bmi {
   padding: 10px;
@@ -336,7 +345,6 @@ nav a:hover {
   font-size: 17px;
   color: #333;
   background-color: #e6e4e481;
-  
 }
 
 .about-bmi h2 {
@@ -362,7 +370,7 @@ nav a:hover {
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
-.bmi-table th{
+.bmi-table th {
   color: #2f4f3f;
 }
 .bmi-table th {
@@ -379,12 +387,106 @@ nav a:hover {
   color: #444;
 }
 /* risks  */
-.risks{
-  color:#444;
-    font-size: 17px;
+.risks {
+  color: #444;
+  font-size: 17px;
 }
-.risks li{
+.risks li {
   margin-top: 5px;
+}
+
+/* diet.html  */
+.dietcontainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 70px;
+}
+
+.mealcontainer {
+  width: 300px;
+  height: 350px;
+  perspective: 1000px;
+}
+
+.mealcontainer-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.mealcontainer:hover .mealcontainer-inner {
+  transform: rotateY(180deg);
+}
+
+/* Front side */
+.mealcontainer-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+
+.mealcontainer-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Back side */
+.mealcontainer-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #f2f2f2;
+  color: #333;
+  border-radius: 15px;
+  padding: 20px;
+  box-sizing: border-box;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.mealcontainer-back h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.nutrition-info {
+  font-size: 14px;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.review-button {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #2f4f3f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.review-button:hover {
+  background-color: #426e58;
 }
 
 @media (min-width: 320px) and (max-width: 599px) {
@@ -432,7 +534,13 @@ nav a:hover {
     font-size: 15px;
     margin: 0 10px;
   }
+
+  /* diet.html */
+  .dietcontainer {
+    flex-direction: column;
+  }
 }
+
 @media (max-width: 768px) {
   nav {
     transform: translateX(-100%);
@@ -463,6 +571,10 @@ nav a:hover {
   }
   .about-bmi {
     padding-left: 220px;
+  }
+  /* diet.html */
+  .dietcontainer {
+    flex-direction: column;
   }
 }
 @media (min-width: 600px) and (max-width: 767px) {
@@ -498,6 +610,11 @@ nav a:hover {
     padding-left: 5px !important;
     font-size: 15px;
     margin: 0 10px;
+  }
+
+  /* diet.html */
+  .dietcontainer {
+    flex-direction: column;
   }
 }
 
@@ -540,6 +657,11 @@ nav a:hover {
   .about-bmi {
     padding-left: 240px;
     font-size: 16px;
+  }
+
+  /* diet.html */
+  .dietcontainer {
+    flex-direction: column;
   }
 }
 

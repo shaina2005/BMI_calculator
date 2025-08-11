@@ -9,7 +9,6 @@ function changeTitle() {
 
   const page = path.substring(path.lastIndexOf("/") + 1);
   let title = "BMI Calculator";
-  const hash = window.location.hash;
 
   switch (page) {
     case "":
@@ -71,11 +70,21 @@ function calculateBmi(e) {
 
   const bmi = weight_in_kg / (height_in_meters * height_in_meters);
 
+  //storing bmi data to local storage
+  const bmidata = {
+    gender: gender,
+    age: age,
+    weight_in_kg: weight_in_kg,
+    height: height,
+    height_unit: height_unit,
+  };
+
+  localStorage.setItem("Bmidata", JSON.stringify(bmidata));
+
   updateBMICircle(bmi);
   hightlight_weight_range(bmi);
   showHealthyWeightRange(height, height_unit);
-  const calories = calculateCalories(gender, weight_in_kg, height, age, height_unit) 
-  fetchApi(calories);
+  document.getElementById("dietplan").style.display = "block";
 }
 //scroll
 function scrolltocalculate() {
@@ -83,32 +92,36 @@ function scrolltocalculate() {
 }
 //reset button
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("reset").addEventListener("click", () => {
-    // Manually reset form inputs
-    document.getElementById("age").value = "";
-    document.getElementById("height").value = "";
-    document.getElementById("weight").value = "";
-    document.getElementById("height_unit").value = "cm"; // default
-    document.getElementById("weight_unit").value = "kg"; // default
-    document.getElementById("male").checked = true; // default gender
+  const resetBtn = document.getElementById("reset");
 
-    // Reset BMI circle
-    const circle = document.getElementById("bmiProgress");
-    circle.style.background = `conic-gradient(#dcdcdc 0% , #dcdcdc 100%)`;
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      // Manually reset form inputs
+      document.getElementById("age").value = "";
+      document.getElementById("height").value = "";
+      document.getElementById("weight").value = "";
+      document.getElementById("height_unit").value = "cm"; // default
+      document.getElementById("weight_unit").value = "kg"; // default
+      document.getElementById("male").checked = true; // default gender
 
-    // Reset BMI value and result
-    document.getElementById("bmiValue").innerText = "0.0";
-    document.getElementById("bmiresult").innerText = "Your Result here";
+      // Reset BMI circle
+      const circle = document.getElementById("bmiProgress");
+      circle.style.background = `conic-gradient(#dcdcdc 0% , #dcdcdc 100%)`;
 
-    // Remove active class from all color-labels
-    document.querySelectorAll(".color-label").forEach((category) => {
-      category.classList.remove("active");
+      // Reset BMI value and result
+      document.getElementById("bmiValue").innerText = "0.0";
+      document.getElementById("bmiresult").innerText = "Your Result here";
+
+      // Remove active class from all color-labels
+      document.querySelectorAll(".color-label").forEach((category) => {
+        category.classList.remove("active");
+      });
+
+      // Clear healthy weight range text
+      const healthyRange = document.getElementById("healthyRange");
+      if (healthyRange) healthyRange.innerText = "";
     });
-
-    // Clear healthy weight range text
-    const healthyRange = document.getElementById("healthyRange");
-    if (healthyRange) healthyRange.innerText = "";
-  });
+  }
 });
 
 // update bmi circle
@@ -223,7 +236,6 @@ function calculateCalories(gender, weight_in_kg, height, age, height_unit) {
     console.log("Invalid gender");
     return;
   }
-
   return Math.round(calories);
 }
 
@@ -236,15 +248,43 @@ async function fetchApi(calories) {
     const response = await fetch(url);
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
-      
+      return data;
     } else {
       alert("Can't Fetch meal plan");
-      return ;
+      return;
     }
-    
   } catch (error) {
-    console.log("error caught: " , error);
-    
+    console.log("error caught: ", error);
   }
+
 }
+
+// user click mealplan button and then api is called
+document.addEventListener("DOMContentLoaded", () => {
+  const dietPlan = document.getElementById("dietplan");
+
+  if (dietPlan) {
+    dietPlan.addEventListener("click", async () => {
+      const bmidata = JSON.parse(localStorage.getItem("Bmidata"));
+
+      if (!bmidata) {
+        alert("Please fill the form first");
+        return;
+      }
+      const calories = calculateCalories(
+        bmidata.gender,
+        bmidata.weight_in_kg,
+        bmidata.height,
+        bmidata.age,
+        bmidata.height_unit
+      );
+
+      const Mealplan = await fetchApi(calories);
+
+      localStorage.setItem("Mealplan", JSON.stringify(Mealplan));
+      
+
+      window.location.href = "diet.html";
+    });
+  }
+});

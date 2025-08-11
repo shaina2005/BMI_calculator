@@ -5,23 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="bmi.css" />
-    <script src="bmi.js"></script>
-    <style>
-      input,
-      select,
-      button {
-        margin: 5px 0;
-        padding: 8px;
-        width: 100%;
-        max-width: 300px;
-      }
-      #dietPlan {
-        margin-top: 20px;
-        background: white;
-        padding: 15px;
-        border-radius: 8px;
-      }
-      </style>
+    <script src="bmi.js" defer></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
       rel="stylesheet"
@@ -44,90 +28,108 @@
       </nav>
       <section>
         <div class="main-section">
-          <div class="main-heading">A Tool to Promote Health Awareness</div>
+          <div class="main-heading">
+            What are we having <strong>today ?</strong>
+          </div>
+          <div id="dietcontainer" class="dietcontainer">
+            <!-- <div class="mealcontainer">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Burrito.JPG/1200px-Burrito.JPG"
+              />
+              <div class="mealcontainer-text">Burito</div>
+              <div class="description">Burito is very tasty</div>
+            </div> -->
+            
+          </div>
 
-          <h2>Check Your BMI & Get Diet Plan</h2>
+          <script>
+            // document.addEventListener("DOMContentLoaded", () => {
+            //   console.log("Page loded");
 
-          <label>Age: <input type="number" id="age" /></label><br />
-          <label>
-            Gender:
-            <select id="gender">
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select> </label
-          ><br />
-          <label>Height (cm): <input type="number" id="height" /></label><br />
-          <label>Weight (kg): <input type="number" id="weight" /></label><br />
-          <label>
-            Activity Level:
-            <select id="activity">
-              <option value="1.2">Sedentary</option>
-              <option value="1.375">Light</option>
-              <option value="1.55">Moderate</option>
-              <option value="1.725">Active</option>
-              <option value="1.9">Very Active</option>
-            </select> </label
-          ><br />
+            //   const Mealplan = JSON.parse(localStorage.getItem("Mealplan"));
+            //   console.log("data in diet.hrml", Mealplan);
 
-          <button onclick="getPlan()">Generate Diet Plan</button>
+            //   const baseUrl = "https://spoonacular.com/recipeImages/";
 
-          <div id="dietPlan"></div>
+            //   const conatiner = document.getElementById("dietcontainer");
 
+            //   Mealplan.meals.forEach((meal) => {
+            //     const card = document.createElement("div");
 
-  <script>
-      async function getPlan() {
-        const age = document.getElementById("age").value;
-        const gender = document.getElementById("gender").value;
-        const height = document.getElementById("height").value;
-        const weight = document.getElementById("weight").value;
-        const activity = document.getElementById("activity").value;
-        const resultDiv = document.getElementById("dietPlan");
+            //     card.classList.add("mealcontainer");
 
-        if (!age || !height || !weight) {
-          resultDiv.textContent = "Please fill in all required fields.";
-          return;
-        }
+            //     card.innerHTML = `
+            // <img src="${baseUrl}${meal.image}" alt=${meal.title}>
+            // <div class="mealcontainer-text">${meal.title}</div>
+            //   <div class="description">Servings:${meal.servings} </div>
+            //   <button> <a href=${meal.sourceUrl} target="_blank">View recipe</a>
+            // `;
 
-        const bmr =
-          gender === "male"
-            ? 10 * weight + 6.25 * height - 5 * age + 5
-            : 10 * weight + 6.25 * height - 5 * age - 161;
+            //     conatiner.appendChild(card);
+            //   });
+            // });
+          document.addEventListener("DOMContentLoaded", () => {
+  const Mealplan = JSON.parse(localStorage.getItem("Mealplan"));
+  if (!Mealplan || !Mealplan.meals) {
+    document.getElementById("dietcontainer").innerText = "No meal plan found.";
+    return;
+  }
 
-        const targetCalories = Math.round(bmr * activity);
-        const apiKey = "5e1513225332d1c5f8347497093ec76c";
-        const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=${targetCalories}&apiKey=${apiKey}`;
+  const baseUrl = "https://spoonacular.com/recipeImages/";
+  const container = document.getElementById("dietcontainer");
 
-        try {
-          const res = await fetch(url);
-          const data = await res.json();
+  container.innerHTML = ""; // clear container
 
-          if (data.meals) {
-            resultDiv.innerHTML = `
-            <h3>Your Diet Plan for the Day (${targetCalories} kcal)</h3>
-            <ul>
-              ${data.meals
-                .map(
-                  (meal) => `
-                <li>
-                  <strong>${meal.title}</strong><br>
-                  <a href="${meal.sourceUrl}" target="_blank">View Recipe</a>
-                </li>
-              `
-                )
-                .join("")}
-            </ul>
-          `;
-          } else {
-            resultDiv.textContent =
-              "No meal plan found. Please try again.";
-          }
-        } catch (err) {
-          resultDiv.textContent = "Error fetching diet plan.";
-        }
-      }
-    </script>
-  </div>
-</section>
-</div>
-</body>
+  Mealplan.meals.forEach((meal) => {
+    // Create outer card container
+    const mealCard = document.createElement("div");
+    mealCard.classList.add("mealcontainer");
+
+    // Inner container that flips
+    const inner = document.createElement("div");
+    inner.classList.add("mealcontainer-inner");
+
+    // Front side with image
+    const front = document.createElement("div");
+    front.classList.add("mealcontainer-front");
+    front.innerHTML = `<img src="${baseUrl}${meal.image}" alt="${meal.title}">`;
+
+    // Back side with details
+    const back = document.createElement("div");
+    back.classList.add("mealcontainer-back");
+
+    // Nutritional info text, servings from meal, calories etc from Mealplan.nutrients (distributed per meal)
+    // We'll approximate calories etc. per meal by dividing total nutrients by meal count
+    const mealCount = Mealplan.meals.length;
+    const calories = (Mealplan.nutrients.calories / mealCount).toFixed(0);
+    const protein = (Mealplan.nutrients.protein / mealCount).toFixed(1);
+    const fat = (Mealplan.nutrients.fat / mealCount).toFixed(1);
+    const carbs = (Mealplan.nutrients.carbohydrates / mealCount).toFixed(1);
+
+    back.innerHTML = `
+      <h3>${meal.title}</h3>
+      <div class="nutrition-info">
+        <p><strong>Servings:</strong> ${meal.servings || 'N/A'}</p>
+        <p><strong>Calories:</strong> ${calories} kcal</p>
+        <p><strong>Protein:</strong> ${protein} g</p>
+        <p><strong>Fat:</strong> ${fat} g</p>
+        <p><strong>Carbohydrates:</strong> ${carbs} g</p>
+      </div>
+      <a href="${meal.sourceUrl}" target="_blank" class="review-button">Review Recipe</a>
+    `;
+
+    // Assemble card
+    inner.appendChild(front);
+    inner.appendChild(back);
+    mealCard.appendChild(inner);
+    container.appendChild(mealCard);
+  });
+});
+
+          
+          </script>
+        </div>
+      </section>
+    </div>
+  </body>
 </html>
