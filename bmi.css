@@ -181,6 +181,7 @@ nav a:hover {
 }
 .inputs {
   margin-top: 20px;
+
 }
 .inputs input {
   width: 70%;
@@ -189,7 +190,9 @@ nav a:hover {
   border-radius: 5px;
   border: 1px solid rgb(205, 205, 160);
   background-color: rgb(205, 205, 160);
+
 }
+
 .inputs select {
   background-color: rgb(205, 205, 160);
   padding: 4px;
@@ -488,6 +491,11 @@ nav a:hover {
 .review-button:hover {
   background-color: #426e58;
 }
+@media (max-width : 320px) or (max-width:375) {
+  .inputs input {
+    width: 37.5% !important;
+  }
+}
 
 @media (min-width: 320px) and (max-width: 599px) {
   .nav-logo-text {
@@ -671,7 +679,7 @@ nav a:hover {
   }
 
   .inputs input {
-    width: 60%;
+    width: 70%;
   }
   .about-bmi {
     padding-left: 240px; /* same as .main-section padding-left */

@@ -43,31 +43,6 @@
           </div>
 
           <script>
-            // document.addEventListener("DOMContentLoaded", () => {
-            //   console.log("Page loded");
-
-            //   const Mealplan = JSON.parse(localStorage.getItem("Mealplan"));
-            //   console.log("data in diet.hrml", Mealplan);
-
-            //   const baseUrl = "https://spoonacular.com/recipeImages/";
-
-            //   const conatiner = document.getElementById("dietcontainer");
-
-            //   Mealplan.meals.forEach((meal) => {
-            //     const card = document.createElement("div");
-
-            //     card.classList.add("mealcontainer");
-
-            //     card.innerHTML = `
-            // <img src="${baseUrl}${meal.image}" alt=${meal.title}>
-            // <div class="mealcontainer-text">${meal.title}</div>
-            //   <div class="description">Servings:${meal.servings} </div>
-            //   <button> <a href=${meal.sourceUrl} target="_blank">View recipe</a>
-            // `;
-
-            //     conatiner.appendChild(card);
-            //   });
-            // });
           document.addEventListener("DOMContentLoaded", () => {
   const Mealplan = JSON.parse(localStorage.getItem("Mealplan"));
   if (!Mealplan || !Mealplan.meals) {
@@ -115,7 +90,7 @@
         <p><strong>Fat:</strong> ${fat} g</p>
         <p><strong>Carbohydrates:</strong> ${carbs} g</p>
       </div>
-      <a href="${meal.sourceUrl}" target="_blank" class="review-button">Review Recipe</a>
+      <a href="${meal.sourceUrl}" target="_blank" class="review-button">view Recipe</a>
     `;
 
     // Assemble card
