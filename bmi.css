@@ -504,8 +504,14 @@ nav a:hover {
     }
 @media (max-width : 320px) or (max-width:375) {
   .inputs input {
-    width: 20.5% !important;
+    width: 37.5% !important;
   }
+}
+@media (max-width : 390px) {
+  .inputs input{
+    width: 20% !important;
+  }
+  
 }
 
 @media (min-width: 320px) and (max-width: 599px) {
