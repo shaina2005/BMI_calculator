@@ -31,22 +31,32 @@
           <div class="main-heading">
             What are we having <strong>today ?</strong>
           </div>
-          <div id="dietcontainer" class="dietcontainer">
-            <!-- <div class="mealcontainer">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Burrito.JPG/1200px-Burrito.JPG"
-              />
-              <div class="mealcontainer-text">Burito</div>
-              <div class="description">Burito is very tasty</div>
-            </div> -->
-            
+          <div class="filters">
+            <label for="healthFilter">Filter by health:</label>
+            <select id="healthFilter">
+              <option value="all">All</option>
+              <option value="vegan">Vegan</option>
+              <option value="vegetarian">Vegetarian</option>
+              <option value="paleo">Paleo</option>
+              <option value="dairy-free">Dairy Free</option>
+              <option value="gluten-free">Gluten Free</option>
+              <option value="low-sugar">Low Sugar</option>
+              <option value="egg-free">Egg Free</option>
+              <option value="peanut-free">Peanut Free</option>
+              <option value="tree-nut-free">Tree Nut Free</option>
+              <option value="soy-free">Soy Free</option>
+              <option value="fish-free">Fish Free</option>
+              <option value="shellfish-free">Shellfish Free</option>
+            </select>
           </div>
 
-          <script>
-          document.addEventListener("DOMContentLoaded", () => {
-  const Mealplan = JSON.parse(localStorage.getItem("Mealplan"));
-  if (!Mealplan || !Mealplan.meals) {
-    document.getElementById("dietcontainer").innerText = "No meal plan found.";
+          <div id="dietcontainer" class="dietcontainer"></div>
+
+          <!-- <script>   
+document.addEventListener("DOMContentLoaded", () => {
+  const Mealplan = JSON.parse(sessionStorage.getItem("Mealplan"));
+  if (!Mealplan || !Mealplan.week) {
+    document.getElementById("dietcontainer").innerHTML = `No meal plan found. Calculate BMI First <a href="index.html">Calculate!</a>`
     return;
   }
 
@@ -55,53 +65,113 @@
 
   container.innerHTML = ""; // clear container
 
-  Mealplan.meals.forEach((meal) => {
-    // Create outer card container
-    const mealCard = document.createElement("div");
-    mealCard.classList.add("mealcontainer");
+  Object.keys(Mealplan.week).forEach(day => {
+    const dayData = Mealplan.week[day];
+    const meals = dayData.meals;
+    const nutrients = dayData.nutrients;
 
-    // Inner container that flips
-    const inner = document.createElement("div");
-    inner.classList.add("mealcontainer-inner");
+    // Day heading
+    // const dayHeading = document.createElement("h2");
+    // dayHeading.textContent = day.charAt(0).toUpperCase() + day.slice(1);
+    // container.appendChild(dayHeading);
 
-    // Front side with image
-    const front = document.createElement("div");
-    front.classList.add("mealcontainer-front");
-    front.innerHTML = `<img src="${baseUrl}${meal.image}" alt="${meal.title}">`;
+    meals.forEach(meal => {
+      // Outer card
+      const mealCard = document.createElement("div");
+      mealCard.classList.add("mealcontainer");
 
-    // Back side with details
-    const back = document.createElement("div");
-    back.classList.add("mealcontainer-back");
+      // Inner container
+      const inner = document.createElement("div");
+      inner.classList.add("mealcontainer-inner");
 
-    // Nutritional info text, servings from meal, calories etc from Mealplan.nutrients (distributed per meal)
-    // We'll approximate calories etc. per meal by dividing total nutrients by meal count
-    const mealCount = Mealplan.meals.length;
-    const calories = (Mealplan.nutrients.calories / mealCount).toFixed(0);
-    const protein = (Mealplan.nutrients.protein / mealCount).toFixed(1);
-    const fat = (Mealplan.nutrients.fat / mealCount).toFixed(1);
-    const carbs = (Mealplan.nutrients.carbohydrates / mealCount).toFixed(1);
+      // Front (image)
+      const front = document.createElement("div");
+      front.classList.add("mealcontainer-front");
+      front.innerHTML = `<img src="${baseUrl}${meal.image}" alt="${meal.title}">`;
 
-    back.innerHTML = `
-      <h3>${meal.title}</h3>
-      <div class="nutrition-info">
-        <p><strong>Servings:</strong> ${meal.servings || 'N/A'}</p>
-        <p><strong>Calories:</strong> ${calories} kcal</p>
-        <p><strong>Protein:</strong> ${protein} g</p>
-        <p><strong>Fat:</strong> ${fat} g</p>
-        <p><strong>Carbohydrates:</strong> ${carbs} g</p>
-      </div>
-      <a href="${meal.sourceUrl}" target="_blank" class="review-button">view Recipe</a>
-    `;
+      // Back (details)
+      const back = document.createElement("div");
+      back.classList.add("mealcontainer-back");
 
-    // Assemble card
-    inner.appendChild(front);
-    inner.appendChild(back);
-    mealCard.appendChild(inner);
-    container.appendChild(mealCard);
+      // Per-meal nutrients
+      const mealCount = meals.length;
+      const calories = (nutrients.calories / mealCount).toFixed(0);
+      const protein = (nutrients.protein / mealCount).toFixed(1);
+      const fat = (nutrients.fat / mealCount).toFixed(1);
+      const carbs = (nutrients.carbohydrates / mealCount).toFixed(1);
+
+      back.innerHTML = `
+        <h3>${meal.title}</h3>
+        <div class="nutrition-info">
+          <p><strong>Servings:</strong> ${meal.servings || 'N/A'}</p>
+          <p><strong>Calories:</strong> ${calories} kcal</p>
+          <p><strong>Protein:</strong> ${protein} g</p>
+          <p><strong>Fat:</strong> ${fat} g</p>
+          <p><strong>Carbohydrates:</strong> ${carbs} g</p>
+        </div>
+        <a href="${meal.sourceUrl}" target="_blank" class="review-button">View Recipe</a>
+      `;
+
+      // Assemble card
+      inner.appendChild(front);
+      inner.appendChild(back);
+      mealCard.appendChild(inner);
+      container.appendChild(mealCard);
+    });
   });
 });
+</script> -->
 
-          
+          <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              const Mealplan = JSON.parse(sessionStorage.getItem("Mealplan"));
+              console.log(Mealplan);
+
+              const container = document.getElementById("dietcontainer");
+              const healthFilter = document.getElementById("healthFilter");
+
+              if (!Mealplan || !Mealplan.hits) {
+                container.innerHTML = `
+                  No meal data found. Calculate BMI first! <a href="index.html">Calculate!</a>
+                `;
+                return;
+                }
+
+              // Function to render recipes
+              function renderRecipes(recipes) {
+                container.innerHTML = ""; // clear container
+                recipes.forEach((item) => {
+                  const card = document.createElement("div");
+                  card.classList.add("mealcard");
+                  card.innerHTML = `
+                  <h3>${item.recipe.label}</h3>
+                  <img src="${item.recipe.image}" alt="${item.recipe.label}" />
+                  <p>Calories: ${Math.round(item.recipe.calories)}</p>
+                  <a href="${item.recipe.url}" target="_blank">View Recipe</a> `;
+                  container.appendChild(card);
+                });
+              }
+
+              // Initial render
+              renderRecipes(Mealplan.hits);
+
+              // Filter change event
+              healthFilter.addEventListener("change", () => {
+                const selected = healthFilter.value;
+
+                if (selected === "all") {
+                  renderRecipes(Mealplan.hits);
+                } else {
+                  // Filter recipes by health label
+                  const filtered = Mealplan.hits.filter((item) =>
+                    item.recipe.healthLabels
+                      .map((label) => label.toLowerCase())
+                      .includes(selected)
+                  );
+                  renderRecipes(filtered);
+                }
+              });
+            });
           </script>
         </div>
       </section>

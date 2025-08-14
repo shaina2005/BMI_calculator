@@ -399,98 +399,109 @@ nav a:hover {
 }
 
 /* diet.html  */
+
+/* Container for filters */
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+  font-family: 'Nunito', sans-serif;
+  /* font-size: 16px; */
+  color: #333;
+}
+
+/* Label style */
+.filters label {
+  font-weight: 600;
+  font-size: 20px;
+}
+
+/* Select dropdown style */
+.filters select {
+  padding: 8px 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+/* Hover effect */
+.filters select:hover {
+  border-color: #a3b18a;
+  box-shadow: 0 0 5px rgba(76, 217, 100, 0.3);
+}
+
+/* Focus effect */
+.filters select:focus {
+  outline: none;
+  border-color: #a3b18a;
+  /* box-shadow: 0 0 8px rgba(76, 217, 100, 0.5); */
+}
+
+/* Responsive: stack label and select on small screens */
+@media (max-width: 600px) {
+  .filters {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .filters label {
+    margin-bottom: 5px;
+  }
+}
+
 .dietcontainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 50px;
   justify-content: space-evenly;
   align-items: center;
   margin-top: 70px;
+
 }
 
-.mealcontainer {
-  width: 300px;
-  height: 350px;
-  perspective: 1000px;
-}
-
-.mealcontainer-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-}
-
-.mealcontainer:hover .mealcontainer-inner {
-  transform: rotateY(180deg);
-}
-
-/* Front side */
-.mealcontainer-front {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 15px;
-  overflow: hidden;
-  backface-visibility: hidden;
-}
-
-.mealcontainer-front img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Back side */
-.mealcontainer-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: #f2f2f2;
-  color: #333;
-  border-radius: 15px;
-  padding: 20px;
-  box-sizing: border-box;
-  backface-visibility: hidden;
-  transform: rotateY(180deg);
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.mealcontainer-back h3 {
-  margin: 0 0 10px;
-  font-size: 22px;
-}
-
-.nutrition-info {
-  font-size: 14px;
-  line-height: 1.5;
-  flex-grow: 1;
-}
-
-.review-button {
-  display: inline-block;
-  padding: 10px 15px;
-  background-color: #2f4f3f;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  text-align: center;
-  text-decoration: none;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.review-button:hover {
-  background-color: #426e58;
-}
+.mealcard {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      width: 250px;
+      transition: transform 0.3s;
+    }
+    .mealcard:hover {
+      transform: translateY(-5px);
+    }
+    .mealcard img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .mealcard h3 {
+      font-size: 18px;
+      margin: 10px;
+      color: #333;
+    }
+    .mealcard p {
+      margin: 0 10px 10px 10px;
+      font-size: 14px;
+      color: #666;
+    }
+    .mealcard a {
+      display: block;
+      text-align: center;
+      margin: 10px;
+      padding: 8px;
+      background: #2f4f3f;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .mealcard a:hover {
+      background: #737d62;
+    }
 @media (max-width : 320px) or (max-width:375) {
   .inputs input {
     width: 37.5% !important;

@@ -70,17 +70,6 @@ function calculateBmi(e) {
 
   const bmi = weight_in_kg / (height_in_meters * height_in_meters);
 
-  //storing bmi data to local storage
-  const bmidata = {
-    gender: gender,
-    age: age,
-    weight_in_kg: weight_in_kg,
-    height: height,
-    height_unit: height_unit,
-  };
-
-  localStorage.setItem("Bmidata", JSON.stringify(bmidata));
-
   updateBMICircle(bmi);
   hightlight_weight_range(bmi);
   showHealthyWeightRange(height, height_unit);
@@ -218,34 +207,21 @@ function showHealthyWeightRange(height, height_unit) {
   )} kg - ${maxHealthyWeight.toFixed(1)} kg`;
 }
 
-// calulating calories using bmr
-function calculateCalories(gender, weight_in_kg, height, age, height_unit) {
-  let calories;
-  let heightCm;
-  if (height_unit === "m") {
-    heightCm = height * 100;
-  } else {
-    heightCm = height;
+//edamam api
+async function healthyApi() {
+  const api_key = `f1b113df7048147a53fc05ec8c335344`;
+  const api_id = `48e0d58a`;
+  const userID = `shaina2005`;
+  const headers = {
+    Authorization : `Basic $btoa(${api_id}:${api_key})`,
+    "Edamam-Account-User" : userID,
   }
+const url = `https://api.edamam.com/api/recipes/v2?type=public&q=healthy&app_id=${api_id}&app_key=${api_key}&from=0&to=100&imageSize=REGULAR&mealType=Breakfast&mealType=Lunch&mealType=Dinner&dishType=Main%20course`;
 
-  if (gender === "male") {
-    calories = 10 * weight_in_kg + 6.25 * heightCm - 5 * age + 5;
-  } else if (gender === "female") {
-    calories = 10 * weight_in_kg + 6.25 * heightCm - 5 * age - 161;
-  } else {
-    console.log("Invalid gender");
-    return;
-  }
-  return Math.round(calories);
-}
-
-//fetching api using calories
-async function fetchApi(calories) {
-  const apiKey = "3cee8f2b15954c7e93629fb48f7d656f";
-  const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=${calories}&apiKey=${apiKey}`;
+;
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {headers});
     if (response.ok) {
       const data = await response.json();
       return data;
@@ -256,8 +232,9 @@ async function fetchApi(calories) {
   } catch (error) {
     console.log("error caught: ", error);
   }
-
 }
+
+
 
 // user click mealplan button and then api is called
 document.addEventListener("DOMContentLoaded", () => {
@@ -265,24 +242,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (dietPlan) {
     dietPlan.addEventListener("click", async () => {
-      const bmidata = JSON.parse(localStorage.getItem("Bmidata"));
 
-      if (!bmidata) {
-        alert("Please fill the form first");
-        return;
-      }
-      const calories = calculateCalories(
-        bmidata.gender,
-        bmidata.weight_in_kg,
-        bmidata.height,
-        bmidata.age,
-        bmidata.height_unit
-      );
 
-      const Mealplan = await fetchApi(calories);
+      const Mealplan = await healthyApi();
 
-      localStorage.setItem("Mealplan", JSON.stringify(Mealplan));
-      
+      sessionStorage.setItem("Mealplan", JSON.stringify(Mealplan));
 
       window.location.href = "diet.html";
     });
