@@ -28,10 +28,8 @@
       </nav>
       <section>
         <div class="main-section">
-          <div class="main-heading">
-            What are we having <strong>today ?</strong>
-          </div>
-          <div class="filters">
+          <div class="main-heading">What are we having today ?</div>
+          <span class="filters">
             <label for="healthFilter">Filter by health:</label>
             <select id="healthFilter">
               <option value="all">All</option>
@@ -40,7 +38,6 @@
               <option value="paleo">Paleo</option>
               <option value="dairy-free">Dairy Free</option>
               <option value="gluten-free">Gluten Free</option>
-              <option value="low-sugar">Low Sugar</option>
               <option value="egg-free">Egg Free</option>
               <option value="peanut-free">Peanut Free</option>
               <option value="tree-nut-free">Tree Nut Free</option>
@@ -48,94 +45,44 @@
               <option value="fish-free">Fish Free</option>
               <option value="shellfish-free">Shellfish Free</option>
             </select>
-          </div>
+          </span>
+
+          <span class="filter" style="margin-left: 20px">
+            <label for="cusinefilter">Cusine</label>
+            <select id="cusinefilter">
+              <option value="all">All</option>
+              <option value="italian">Italian</option>
+              <option value="american">American</option>
+              <option value="nordic">Nordic</option>
+              <option value="mexican">Mexican</option>
+              <option value="eastern europe">Eastern europe</option>
+              <option value="indian">Indian</option>
+              <option value=": south american">South american</option>
+              <option value=": mediterranean">Mediterranean</option>
+              <option value=": french">French</option>
+            </select>
+          </span>
 
           <div id="dietcontainer" class="dietcontainer"></div>
-
-          <!-- <script>   
-document.addEventListener("DOMContentLoaded", () => {
-  const Mealplan = JSON.parse(sessionStorage.getItem("Mealplan"));
-  if (!Mealplan || !Mealplan.week) {
-    document.getElementById("dietcontainer").innerHTML = `No meal plan found. Calculate BMI First <a href="index.html">Calculate!</a>`
-    return;
-  }
-
-  const baseUrl = "https://spoonacular.com/recipeImages/";
-  const container = document.getElementById("dietcontainer");
-
-  container.innerHTML = ""; // clear container
-
-  Object.keys(Mealplan.week).forEach(day => {
-    const dayData = Mealplan.week[day];
-    const meals = dayData.meals;
-    const nutrients = dayData.nutrients;
-
-    // Day heading
-    // const dayHeading = document.createElement("h2");
-    // dayHeading.textContent = day.charAt(0).toUpperCase() + day.slice(1);
-    // container.appendChild(dayHeading);
-
-    meals.forEach(meal => {
-      // Outer card
-      const mealCard = document.createElement("div");
-      mealCard.classList.add("mealcontainer");
-
-      // Inner container
-      const inner = document.createElement("div");
-      inner.classList.add("mealcontainer-inner");
-
-      // Front (image)
-      const front = document.createElement("div");
-      front.classList.add("mealcontainer-front");
-      front.innerHTML = `<img src="${baseUrl}${meal.image}" alt="${meal.title}">`;
-
-      // Back (details)
-      const back = document.createElement("div");
-      back.classList.add("mealcontainer-back");
-
-      // Per-meal nutrients
-      const mealCount = meals.length;
-      const calories = (nutrients.calories / mealCount).toFixed(0);
-      const protein = (nutrients.protein / mealCount).toFixed(1);
-      const fat = (nutrients.fat / mealCount).toFixed(1);
-      const carbs = (nutrients.carbohydrates / mealCount).toFixed(1);
-
-      back.innerHTML = `
-        <h3>${meal.title}</h3>
-        <div class="nutrition-info">
-          <p><strong>Servings:</strong> ${meal.servings || 'N/A'}</p>
-          <p><strong>Calories:</strong> ${calories} kcal</p>
-          <p><strong>Protein:</strong> ${protein} g</p>
-          <p><strong>Fat:</strong> ${fat} g</p>
-          <p><strong>Carbohydrates:</strong> ${carbs} g</p>
-        </div>
-        <a href="${meal.sourceUrl}" target="_blank" class="review-button">View Recipe</a>
-      `;
-
-      // Assemble card
-      inner.appendChild(front);
-      inner.appendChild(back);
-      mealCard.appendChild(inner);
-      container.appendChild(mealCard);
-    });
-  });
-});
-</script> -->
 
           <script>
             document.addEventListener("DOMContentLoaded", () => {
               const Mealplan = JSON.parse(sessionStorage.getItem("Mealplan"));
+              // const Calorieplan = JSON.parse(sessionStorage.getItem("Calorieplan"));
+              // console.log(Calorieplan);
+
               console.log(Mealplan);
 
               const container = document.getElementById("dietcontainer");
               const healthFilter = document.getElementById("healthFilter");
+              const cusinefilter = document.getElementById("cusinefilter");
 
               if (!Mealplan || !Mealplan.hits) {
                 container.innerHTML = `
                   No meal data found. Calculate BMI first! <a href="index.html">Calculate!</a>
                 `;
                 return;
-                }
+              }
 
               // Function to render recipes
               function renderRecipes(recipes) {
@@ -146,8 +93,15 @@ document.addEventListener("DOMContentLoaded", () => {
                   card.innerHTML = `
                   <h3>${item.recipe.label}</h3>
                   <img src="${item.recipe.image}" alt="${item.recipe.label}" />
-                  <p>Calories: ${Math.round(item.recipe.calories)}</p>
-                  <a href="${item.recipe.url}" target="_blank">View Recipe</a> `;
+                  <p>Calories: ${Math.round(item.recipe.calories)} kcal</p>
+                  <p> Cusine : ${item.recipe.cuisineType}</p>
+                  <p>Fat : ${Math.round(
+                    item.recipe.totalNutrients.FAT.quantity
+                  )} g </p>
+                  <p> cautions : ${item.recipe.cautions}</p>
+                  <a href="${
+                    item.recipe.url
+                  }" target="_blank">View Recipe</a> `;
                   container.appendChild(card);
                 });
               }
@@ -155,22 +109,37 @@ document.addEventListener("DOMContentLoaded", () => {
               // Initial render
               renderRecipes(Mealplan.hits);
 
-              // Filter change event
-              healthFilter.addEventListener("change", () => {
-                const selected = healthFilter.value;
+              function applyFilters() {
+                const selected_health = healthFilter.value.toLowerCase();
+                const selected_cusine = cusinefilter.value.toLowerCase();
 
-                if (selected === "all") {
-                  renderRecipes(Mealplan.hits);
-                } else {
-                  // Filter recipes by health label
-                  const filtered = Mealplan.hits.filter((item) =>
-                    item.recipe.healthLabels
-                      .map((label) => label.toLowerCase())
-                      .includes(selected)
-                  );
-                  renderRecipes(filtered);
-                }
-              });
+                const filtered = Mealplan.hits.filter((item) => {
+                  let health_filtered;
+                  if (selected_health === "all") {
+                    health_filtered = true;
+                  } else {
+                    health_filtered = item.recipe.healthLabels.some(
+                      (label) => label.toLowerCase() === selected_health
+                    );
+                  }
+
+                  let cusine_filtered;
+                  if (selected_cusine === "all") {
+                    cusine_filtered = true;
+                  } else {
+                    cusine_filtered = item.recipe.cuisineType.some(
+                      (c) => c.toLowerCase() === selected_cusine
+                    );
+                  }
+
+                  return health_filtered && cusine_filtered;
+                });
+
+                renderRecipes(filtered);
+              }
+
+              healthFilter.addEventListener("change", applyFilters);
+              cusinefilter.addEventListener("change", applyFilters);
             });
           </script>
         </div>

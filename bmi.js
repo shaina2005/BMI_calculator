@@ -74,6 +74,16 @@ function calculateBmi(e) {
   hightlight_weight_range(bmi);
   showHealthyWeightRange(height, height_unit);
   document.getElementById("dietplan").style.display = "block";
+
+  const Bmidata = {
+    age,
+    gender,
+    height,
+    height_unit,
+    weight_in_kg,
+  };
+
+  sessionStorage.setItem("Bmidata", JSON.stringify(Bmidata));
 }
 //scroll
 function scrolltocalculate() {
@@ -206,24 +216,55 @@ function showHealthyWeightRange(height, height_unit) {
     1
   )} kg - ${maxHealthyWeight.toFixed(1)} kg`;
 }
+//calculate calories
+function calculatecalories(age, gender, height, height_unit, weight_in_kg) {
+  const heightincm = height_unit === "cm" ? height : height * 100;
+  let calories;
+
+  if (gender === "male") {
+    calories = 10 * weight_in_kg + 6.25 * heightincm - 5 * age + 5;
+  } else if (gender === "female") {
+    calories = 10 * weight_in_kg + 6.25 * heightincm - 5 * age - 161;
+  }
+  console.log("cal", calories);
+
+  return Math.round(calories);
+}
+
+//spoonacular api
+async function spoonacularapi(calories) {
+  const api_key = `ce5cea566e2247c89a1525c52b67dab6`;
+  // const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=${calories}&apiKey=${api_key}`;
+
+  // try {
+  //   const response = await fetch(url);
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     console.log(data);
+  //     return data;
+  //   }
+  // } catch (error) {
+  //   console.log("Error caught : ", error);
+  // }
+}
 
 //edamam api
-async function healthyApi() {
+async function edamamapi() {
   const api_key = `f1b113df7048147a53fc05ec8c335344`;
   const api_id = `48e0d58a`;
   const userID = `shaina2005`;
   const headers = {
-    Authorization : `Basic $btoa(${api_id}:${api_key})`,
-    "Edamam-Account-User" : userID,
-  }
-const url = `https://api.edamam.com/api/recipes/v2?type=public&q=healthy&app_id=${api_id}&app_key=${api_key}&from=0&to=100&imageSize=REGULAR&mealType=Breakfast&mealType=Lunch&mealType=Dinner&dishType=Main%20course`;
-
-;
+    Authorization: `Basic $btoa(${api_id}:${api_key})`,
+    "Edamam-Account-User": userID,
+  };
+  const url = `https://api.edamam.com/api/recipes/v2?type=public&q=healthy&app_id=${api_id}&app_key=${api_key}&from=0&to=100&imageSize=REGULAR&mealType=Breakfast&mealType=Lunch&mealType=Dinner&dishType=Main%20course`;
 
   try {
-    const response = await fetch(url, {headers});
+    const response = await fetch(url, { headers });
     if (response.ok) {
       const data = await response.json();
+      console.log(data);
+
       return data;
     } else {
       alert("Can't Fetch meal plan");
@@ -234,21 +275,37 @@ const url = `https://api.edamam.com/api/recipes/v2?type=public&q=healthy&app_id=
   }
 }
 
-
-
 // user click mealplan button and then api is called
 document.addEventListener("DOMContentLoaded", () => {
   const dietPlan = document.getElementById("dietplan");
 
-  if (dietPlan) {
-    dietPlan.addEventListener("click", async () => {
+  if (!dietPlan) return;
+  const loadingElement = document.getElementById("loading");
+  dietPlan.addEventListener("click", async () => {
+    console.log("get meal clicked");
 
+    const Bmidata = JSON.parse(sessionStorage.getItem("Bmidata"));
 
-      const Mealplan = await healthyApi();
+    if (!Bmidata) {
+      console.log("No BMI data found in sessionStorage yet.");
+      return; // stop running the rest
+    }
+    console.log("bmi", Bmidata);
 
-      sessionStorage.setItem("Mealplan", JSON.stringify(Mealplan));
+    const calories = calculatecalories(
+      Bmidata.age,
+      Bmidata.gender,
+      Bmidata.height,
+      Bmidata.height_unit,
+      Bmidata.weight_in_kg
+    );
+    loadingElement.style.display = "block";
+    // const Calorieplan = await spoonacularapi(calories);
+    const Mealplan = await edamamapi();
 
-      window.location.href = "diet.html";
-    });
-  }
+    // sessionStorage.setItem("Calorieplan", JSON.stringify(Calorieplan));
+    sessionStorage.setItem("Mealplan", JSON.stringify(Mealplan));
+
+    window.location.href = "diet.html";
+  });
 });

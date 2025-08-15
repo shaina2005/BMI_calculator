@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .dietcontainer {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        width: 100%;
+        padding: 20px;
+        justify-content: center;
+      }
+
+      .mealcard {
+        height: 280px;
+        width: 280px;
+        border-radius: 10px;
+        perspective: 1000px;
+      }
+
+      .mealcard-front {
+        background-color: white;
+        height: 100%;
+        width: 100%;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        backface-visibility: hidden;
+        transition: transform 0.8s ease;
+      }
+      .mealcard-front-tittle {
+        height: 30%;
+        background-color: green;
+        border-radius: 10px 10px 0px 0px;
+        font-size: 20px;
+        padding: 2px;
+      }
+      .mealcard-front img {
+        height: 70%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: 0px 0px 10px 10px;
+      }
+      .mealcard-back {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: yellow;
+        height: 100%;
+        width: 100%;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        transform: rotateY(180deg);
+        transition: transform 0.8s ease;
+        backface-visibility: hidden;
+      }
+
+      .mealcard:hover .mealcard-front {
+        transform: rotateY(-180deg);
+      }
+
+      .mealcard:hover .mealcard-back {
+        transform: rotateY(0deg);
+      }
+    </style>
+  </head>
+  <body>
+    <button id="call">Click</button>
+    <div class="dietcontainer" id="dietcontainer">
+      <div class="mealcard" id="mealcard">
+        <div class="mealcard-front">
+          <div class="mealcard-front-tittle">Burito</div>
+          <img src="images/girl_avatar.jpg" />
+        </div>
+
+        <div class="mealcard-back">
+          item-name= abc <br />
+          item-calories= abc;
+        </div>
+      </div>
+    </div>
+
+    <script>
+        const sampledata = [
+        {
+          mealtittle: "Apple",
+          mealimage: "https://upload.wikimedia.org/wikipedia/commons/f/f4/Red_Apple.jpg",
+          mealcalories: 5000,
+          servings: 5,
+          url: "https://www.i4n.in/wp-content/uploads/2023/05/Recipe-Book.pdf",
+        },
+        {
+          mealtittle: "Banana",
+          mealimage: "https://upload.wikimedia.org/wikipedia/commons/8/8a/Banana-Single.jpg",
+          mealcalories: 4000,
+          servings: 6,
+          url: "https://www.i4n.in/wp-content/uploads/2023/05/Recipe-Book.pdf",
+        },
+        {
+          mealtittle: "Strawberry",
+          mealimage: "https://upload.wikimedia.org/wikipedia/commons/2/29/PerfectStrawberry.jpg",
+          mealcalories: 7000,
+          servings: 8,
+          url: "https://www.i4n.in/wp-content/uploads/2023/05/Recipe-Book.pdf",
+        },
+      ];
+            const container = document.getElementById("dietcontainer");
+            document.getElementById("call").addEventListener("click", () => {
+              container.innerHTML = " ";
+              sampledata.forEach((data) => {
+                const card = document.createElement("div");
+                card.classList.add("mealcard");
+
+                card.innerHTML = `
+                  <div class="mealcard-front">
+                    <div class="mealcard-front-tittle">Mealtittle ${data.mealtittle}</div>
+                    <img src= ${data.mealimage} alt=${data.mealimage} />
+                  </div>
+
+
+
+                  <div class="mealcard-back">
+                  <p>Mealtitle ${data.mealtittle}</p>
+                  <p>calories ${data.mealcalories}</p>
+                  <p>Servings ${data.servings}</p>
+                  <button <a href="${data.url} target="_blank">View recipe</a>
+                    </div>
+                  `;
+
+                  container.appendChild(card);
+              });
+            });
+    </script>
+  </body>
+</html>
