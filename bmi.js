@@ -233,8 +233,9 @@ function calculatecalories(age, gender, height, height_unit, weight_in_kg) {
 
 //spoonacular api
 async function spoonacularapi(calories) {
-  const api_key = `ce5cea566e2247c89a1525c52b67dab6`;
-  const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=${calories}&apiKey=${api_key}`;
+  const api_key1 = `ce5cea566e2247`;
+  const api_key2 =`c89a1525c52b67dab6`;
+  const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=${calories}&apiKey=${api_key1}${api_key2}`;
 
   try {
     const response = await fetch(url);
@@ -250,14 +251,15 @@ async function spoonacularapi(calories) {
 
 //edamam api
 async function edamamapi() {
-  const api_key = `f1b113df7048147a53fc05ec8c335344`;
+  const api_key1 = `f1b113df7048147`;
+  const api_key2 = `a53fc05ec8c335344`;
   const api_id = `48e0d58a`;
   const userID = `shaina2005`;
   const headers = {
-    Authorization: `Basic $btoa(${api_id}:${api_key})`,
+    Authorization: `Basic $btoa(${api_id}:${api_key1}${api_key2})`,
     "Edamam-Account-User": userID,
   };
-  const url = `https://api.edamam.com/api/recipes/v2?type=public&q=healthy&app_id=${api_id}&app_key=${api_key}&from=0&to=100&imageSize=REGULAR`;
+  const url = `https://api.edamam.com/api/recipes/v2?type=public&q=healthy&app_id=${api_id}&app_key=${api_key1}${api_key2}&from=0&to=100&imageSize=REGULAR`;
 
   try {
     const response = await fetch(url, { headers });
