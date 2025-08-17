@@ -234,18 +234,18 @@ function calculatecalories(age, gender, height, height_unit, weight_in_kg) {
 //spoonacular api
 async function spoonacularapi(calories) {
   const api_key = `ce5cea566e2247c89a1525c52b67dab6`;
-  // const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=${calories}&apiKey=${api_key}`;
+  const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=${calories}&apiKey=${api_key}`;
 
-  // try {
-  //   const response = await fetch(url);
-  //   if (response.ok) {
-  //     const data = await response.json();
-  //     console.log(data);
-  //     return data;
-  //   }
-  // } catch (error) {
-  //   console.log("Error caught : ", error);
-  // }
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      return data;
+    }
+  } catch (error) {
+    console.log("Error caught : ", error);
+  }
 }
 
 //edamam api
@@ -257,7 +257,7 @@ async function edamamapi() {
     Authorization: `Basic $btoa(${api_id}:${api_key})`,
     "Edamam-Account-User": userID,
   };
-  const url = `https://api.edamam.com/api/recipes/v2?type=public&q=healthy&app_id=${api_id}&app_key=${api_key}&from=0&to=100&imageSize=REGULAR&mealType=Breakfast&mealType=Lunch&mealType=Dinner&dishType=Main%20course`;
+  const url = `https://api.edamam.com/api/recipes/v2?type=public&q=healthy&app_id=${api_id}&app_key=${api_key}&from=0&to=100&imageSize=REGULAR`;
 
   try {
     const response = await fetch(url, { headers });
@@ -297,13 +297,13 @@ document.addEventListener("DOMContentLoaded", () => {
       Bmidata.gender,
       Bmidata.height,
       Bmidata.height_unit,
-      Bmidata.weight_in_kg
+      Bmidata.weight_in_kg++
     );
     loadingElement.style.display = "block";
-    // const Calorieplan = await spoonacularapi(calories);
+    const Calorieplan = await spoonacularapi(calories);
     const Mealplan = await edamamapi();
 
-    // sessionStorage.setItem("Calorieplan", JSON.stringify(Calorieplan));
+    sessionStorage.setItem("Calorieplan", JSON.stringify(Calorieplan));
     sessionStorage.setItem("Mealplan", JSON.stringify(Mealplan));
 
     window.location.href = "diet.html";

@@ -29,53 +29,88 @@
       <section>
         <div class="main-section">
           <div class="main-heading">What are we having today ?</div>
-          <span class="filters">
-            <label for="healthFilter">Filter by health:</label>
-            <select id="healthFilter">
-              <option value="all">All</option>
-              <option value="vegan">Vegan</option>
-              <option value="vegetarian">Vegetarian</option>
-              <option value="paleo">Paleo</option>
-              <option value="dairy-free">Dairy Free</option>
-              <option value="gluten-free">Gluten Free</option>
-              <option value="egg-free">Egg Free</option>
-              <option value="peanut-free">Peanut Free</option>
-              <option value="tree-nut-free">Tree Nut Free</option>
-              <option value="soy-free">Soy Free</option>
-              <option value="fish-free">Fish Free</option>
-              <option value="shellfish-free">Shellfish Free</option>
-            </select>
-          </span>
 
-          <span class="filter" style="margin-left: 20px">
-            <label for="cusinefilter">Cusine</label>
-            <select id="cusinefilter">
-              <option value="all">All</option>
-              <option value="italian">Italian</option>
-              <option value="american">American</option>
-              <option value="nordic">Nordic</option>
-              <option value="mexican">Mexican</option>
-              <option value="eastern europe">Eastern europe</option>
-              <option value="indian">Indian</option>
-              <option value=": south american">South american</option>
-              <option value=": mediterranean">Mediterranean</option>
-              <option value=": french">French</option>
-            </select>
-          </span>
+          <div class="calorie-container" id="caloriecontainer"></div>
+          <p style="text-align: center; font-size: 50px">Explore More</p>
+          <div class="filters-wrapper">
+            <span class="filters">
+              <label for="healthFilter">Filter by health:</label>
+              <select id="healthFilter">
+                <option value="all">All</option>
+                <option value="vegan">Vegan</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="paleo">Paleo</option>
+                <option value="dairy-free">Dairy Free</option>
+                <option value="gluten-free">Gluten Free</option>
+                <option value="egg-free">Egg Free</option>
+                <option value="peanut-free">Peanut Free</option>
+                <option value="tree-nut-free">Tree Nut Free</option>
+                <option value="soy-free">Soy Free</option>
+                <option value="fish-free">Fish Free</option>
+                <option value="shellfish-free">Shellfish Free</option>
+              </select>
+            </span>
+
+            <span class="filters" style="margin-left: 20px">
+              <label for="cusinefilter">Cusine</label>
+              <select id="cusinefilter">
+                <option value="all">All</option>
+                <option value="italian">Italian</option>
+                <option value="american">American</option>
+                <option value="nordic">Nordic</option>
+                <option value="mexican">Mexican</option>
+                <option value="eastern europe">Eastern europe</option>
+                <option value="indian">Indian</option>
+                <option value=": south american">South american</option>
+                <option value=": mediterranean">Mediterranean</option>
+                <option value=": french">French</option>
+              </select>
+            </span>
+          </div>
 
           <div id="dietcontainer" class="dietcontainer"></div>
 
           <script>
             document.addEventListener("DOMContentLoaded", () => {
               const Mealplan = JSON.parse(sessionStorage.getItem("Mealplan"));
-              // const Calorieplan = JSON.parse(sessionStorage.getItem("Calorieplan"));
-              // console.log(Calorieplan);
+              const Calorieplan = JSON.parse(
+                sessionStorage.getItem("Calorieplan")
+              );
+              console.log(Calorieplan);
 
               console.log(Mealplan);
-
+              const calorieContainer =
+                document.getElementById("caloriecontainer");
               const container = document.getElementById("dietcontainer");
               const healthFilter = document.getElementById("healthFilter");
               const cusinefilter = document.getElementById("cusinefilter");
+
+              if (!Calorieplan || !Calorieplan.meals) {
+                calorieContainer.innerHTML = `<h3>Cant fetch the calorie based plan calculate BMI first <a href="index.html">Calculate!</a>`;
+                return;
+              }
+              function calorieRender(bmirecipe) {
+                calorieContainer.innerHTML = "";
+                bmirecipe.meals.forEach((recipe) => {
+                  const caloriecard = document.createElement("div");
+                  caloriecard.classList.add("mealcard");
+                  caloriecard.innerHTML = `
+                  <h3>${recipe.title}</h3>
+                  <img src="https://spoonacular.com/recipeImages/${
+                    recipe.image
+                  }" alt=${recipe.title}>
+                  <p>Calories : ${Math.round(bmirecipe.nutrients.calories / 3)}
+                  <p> fat : ${Math.round(bmirecipe.nutrients.fat / 3)}
+                  <p> Protein : ${Math.round(
+                    bmirecipe.nutrients.protien
+                  )}<br><br>
+                  <a href="${recipe.sourceUrl}" target="_blank">View Recipe</a>
+                  `;
+                  calorieContainer.appendChild(caloriecard);
+                });
+              }
+
+              calorieRender(Calorieplan); // calorie card from spoonacular api
 
               if (!Mealplan || !Mealplan.hits) {
                 container.innerHTML = `
@@ -83,7 +118,6 @@
                 `;
                 return;
               }
-
               // Function to render recipes
               function renderRecipes(recipes) {
                 container.innerHTML = ""; // clear container

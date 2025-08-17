@@ -114,7 +114,7 @@ nav a:hover {
 .form-right {
   width: 50%;
   border-radius: 20px;
-  max-height:550px;
+  max-height: 550px;
 }
 .form-left {
   border-radius: 20px;
@@ -181,7 +181,6 @@ nav a:hover {
 }
 .inputs {
   margin-top: 20px;
-
 }
 .inputs input {
   width: 70%;
@@ -190,7 +189,6 @@ nav a:hover {
   border-radius: 5px;
   border: 1px solid rgb(205, 205, 160);
   background-color: rgb(205, 205, 160);
-
 }
 
 .inputs select {
@@ -347,14 +345,14 @@ nav a:hover {
   display: none;
   font-size: 14px;
   text-align: center;
-  gap: 8px; 
-  color: #2e5732; 
-  margin-top: 10px; 
+  gap: 8px;
+  color: #2e5732;
+  margin-top: 10px;
 }
 
 .spinner {
-  border: 3px solid #e6f2e6; 
-  border-top: 3px solid #2e5732; 
+  border: 3px solid #e6f2e6;
+  border-top: 3px solid #2e5732;
   border-radius: 50%;
   width: 18px;
   height: 18px;
@@ -363,10 +361,13 @@ nav a:hover {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
-
 
 .about-bmi {
   padding: 10px;
@@ -425,6 +426,15 @@ nav a:hover {
 }
 
 /* diet.html  */
+
+.calorie-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 70px;
+}
 .dietcontainer {
   display: flex;
   flex-wrap: wrap;
@@ -432,57 +442,125 @@ nav a:hover {
   justify-content: space-evenly;
   align-items: center;
   margin-top: 70px;
-
+}
+/* Parent container for both filters */
+.filters-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* spacing between filters */
+  flex-wrap: wrap; /* stack only if very small screen */
+  font-family: "Nunito", sans-serif;
+  margin: 20px 50px;
+  /* justify-content: flex-start; */
 }
 
- .mealcard {
-        background: #fff;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        width: 250px;
-        padding: 15px;
-        text-align: center;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
+/* Individual filter container */
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* space between label and select */
+}
 
-      .mealcard:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      }
+/* Label styling */
+.filters label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #555;
+  white-space: nowrap; /* prevent text from breaking into 2 lines */
+}
 
-      .mealcard h3 {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-        color: #333;
-      }
+/* Stylish select dropdown */
+.filters select {
+  padding: 6px 14px;
+  border-radius: 50px; /* pill shape */
+  border: none;
+  /* background-color: #f0f0f0; */
+  color: #333;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  /* -webkit-appearance: none;
+  -moz-appearance: none; */
+  /* min-width: 50px; consistent width */
+}
 
-      .mealcard img {
-        width: 100%;
-        height: 150px;
-        object-fit: cover;
-        border-radius: 8px;
-        margin-bottom: 10px;
-      }
+/* Hover effect */
+.filters select:hover {
+  /* background-color: #e6f4ea; */
+  /* color: #2f6f3f; */
+  /* box-shadow: 0 3px 7px rgba(0,0,0,0.15); */
+}
 
-      .mealcard p {
-        font-size: 0.95rem;
-        margin-bottom: 10px;
-        color: #555;
-      }
+/* Focus effect */
+.filters select:focus {
+  outline: none;
+  background-color: #e6f4ea;
+  /* color: #2f6f3f; */
+  /* box-shadow: 0 0 5px rgba(76,175,80,0.5); */
+}
 
-      .mealcard a {
-        display: inline-block;
-        text-decoration: none;
-        background-color: #437057;
-        color: #fff;
-        padding: 8px 15px;
-        border-radius: 6px;
-        transition: background 0.3s ease;
-      }
+.mealcard {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  padding: 15px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-      .mealcard a:hover {
-        background-color: #294435;
-      }
+.mealcard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.mealcard h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.mealcard img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.mealcard p {
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.mealcard a {
+  display: inline-block;
+  text-decoration: none;
+  background-color: #437057;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.mealcard a:hover {
+  background-color: #294435;
+}
+
+/* For devices between 340px and 420px */
+@media (min-width: 320px) and (max-width: 340px) {
+  .inputs input {
+    width: 35%;
+  }
+}
+
+@media (min-width: 341px) and (max-width: 400px) {
+  .inputs input {
+    width: 40%;
+  }
+}
 
 @media (min-width: 320px) and (max-width: 599px) {
   .nav-logo-text {
@@ -518,10 +596,6 @@ nav a:hover {
   .gender-toggle {
     margin-top: 10px;
   }
-  .inputs input {
-    width: 50%;
-  }
-  
   .bmiresult {
     font-size: 20px;
   }
@@ -600,7 +674,7 @@ nav a:hover {
   }
 
   .inputs input {
-    width: 60%;
+    width: 70%;
   }
   .about-bmi {
     padding-left: 5px !important;
@@ -615,7 +689,7 @@ nav a:hover {
 }
 
 /* Medium devices: 768px–1199px */
-@media (min-width: 768px) and (max-width: 1199px) {
+@media (min-width: 768px) and (max-width: 1000px) {
   .main-section {
     padding-left: 240px;
   }
@@ -661,13 +735,13 @@ nav a:hover {
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1000px) {
   .main-section {
     padding-left: 240px;
   }
 
   .inputs input {
-    width: 70%;
+    width: 60%;
   }
   .about-bmi {
     padding-left: 240px; /* same as .main-section padding-left */
