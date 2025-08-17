@@ -85,10 +85,10 @@ function calculateBmi(e) {
 
   sessionStorage.setItem("Bmidata", JSON.stringify(Bmidata));
 }
-//scroll
-function scrolltocalculate() {
-  document.getElementById("calculate").scrollIntoView({ behavior: "smooth" });
-}
+// //scroll
+// function scrolltocalculate() {
+//   document.getElementById("calculate").scrollIntoView({ behavior: "smooth" });
+// }
 //reset button
 document.addEventListener("DOMContentLoaded", () => {
   const resetBtn = document.getElementById("reset");

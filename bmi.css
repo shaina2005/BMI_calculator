@@ -4,6 +4,11 @@ body {
   font-family: "Nunito", sans-serif;
   overflow-x: hidden;
 }
+html{
+  scroll-padding-top: 90px;
+}
+
+
 .layout-container {
   display: flex;
 }
@@ -554,12 +559,19 @@ nav a:hover {
   .inputs input {
     width: 35%;
   }
+
+  .color-label {
+  font-size: 15px;
+}
 }
 
 @media (min-width: 341px) and (max-width: 400px) {
   .inputs input {
     width: 40%;
   }
+    .color-label {
+  font-size: 18px;
+}
 }
 
 @media (min-width: 320px) and (max-width: 599px) {
@@ -583,6 +595,10 @@ nav a:hover {
   .form-left,
   .form-right {
     width: 90%;
+  }
+
+    .inputs input {
+    width: 50%;
   }
   .form-right {
     padding: 10px;
