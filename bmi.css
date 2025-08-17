@@ -453,7 +453,7 @@ nav a:hover {
   display: flex;
   align-items: center;
   gap: 20px; /* spacing between filters */
-  flex-wrap: wrap; /* stack only if very small screen */
+  /* flex-wrap: wrap; stack only if very small screen */
   font-family: "Nunito", sans-serif;
   margin: 20px 50px;
   /* justify-content: flex-start; */
