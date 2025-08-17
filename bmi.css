@@ -174,14 +174,14 @@ nav a:hover {
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
-  background-color: rgb(205, 205, 160);
+  background-color: rgba(205, 205, 160, 0.692);
   color: white;
   transition: background-color 0s ease, color 0.3s;
 }
 
 .gender-toggle input[type="radio"]:checked + label {
   background-color: #437057;
-  color: rgb(205, 205, 160);
+  color: rgba(205, 205, 160, 0.692);
   border-radius: 20px;
 }
 .inputs {
@@ -193,11 +193,11 @@ nav a:hover {
   margin-top: 10px;
   border-radius: 5px;
   border: 1px solid rgb(205, 205, 160);
-  background-color: rgb(205, 205, 160);
+  background-color: rgba(205, 205, 160, 0.692);
 }
 
 .inputs select {
-  background-color: rgb(205, 205, 160);
+  background-color: rgba(205, 205, 160, 0.692);
   padding: 4px;
   border: none;
   border-radius: 5px;
