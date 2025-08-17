@@ -159,7 +159,7 @@ nav a:hover {
   border-radius: 20px;
   overflow: hidden;
   height: 40px;
-  background-color: rgb(205, 205, 160);
+  background-color: rgba(205, 205, 160, 0.692);
 }
 
 .gender-toggle input[type="radio"] {
@@ -167,7 +167,7 @@ nav a:hover {
 }
 
 .gender-toggle label {
-  flex: 1; /* Take equal space */
+  flex: 1; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -181,7 +181,7 @@ nav a:hover {
 
 .gender-toggle input[type="radio"]:checked + label {
   background-color: #437057;
-  color: rgba(205, 205, 160, 0.692);
+  color: white;
   border-radius: 20px;
 }
 .inputs {
@@ -221,7 +221,7 @@ nav a:hover {
   padding: 10px;
   border-radius: 5px;
   border: none;
-  color: rgb(205, 205, 160);
+  color: white;
   font-weight: 700;
   width: 100%;
   flex: 1;
@@ -453,7 +453,7 @@ nav a:hover {
   display: flex;
   align-items: center;
   gap: 20px; /* spacing between filters */
-  /* flex-wrap: wrap; stack only if very small screen */
+  flex-wrap: wrap; /* stack only if very small screen */
   font-family: "Nunito", sans-serif;
   margin: 20px 50px;
   /* justify-content: flex-start; */
