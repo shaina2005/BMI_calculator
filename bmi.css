@@ -188,7 +188,6 @@ nav a:hover {
   margin-top: 20px;
 }
 .inputs input {
-  width: 70%;
   padding: 4px;
   margin-top: 10px;
   border-radius: 5px;
@@ -226,7 +225,10 @@ nav a:hover {
   width: 100%;
   flex: 1;
 }
-
+.button-container a{
+  color: white;
+  text-decoration: none;
+}
 /* bmi result  */
 .bmi-container {
   display: flex;
@@ -359,6 +361,8 @@ nav a:hover {
   border: 3px solid #e6f2e6;
   border-top: 3px solid #2e5732;
   border-radius: 50%;
+    margin-top: 10px;
+
   width: 18px;
   height: 18px;
   animation: spin 0.8s linear infinite;
@@ -375,7 +379,7 @@ nav a:hover {
 }
 
 .about-bmi {
-  padding: 10px;
+  padding: 20px;
   border-radius: 10px;
   font-size: 17px;
   color: #333;
@@ -452,18 +456,16 @@ nav a:hover {
 .filters-wrapper {
   display: flex;
   align-items: center;
-  gap: 20px; /* spacing between filters */
-  /* flex-wrap: wrap; stack only if very small screen */
+  gap: 20px; 
   font-family: "Nunito", sans-serif;
   margin: 20px 50px;
-  /* justify-content: flex-start; */
 }
 
 /* Individual filter container */
 .filters {
   display: flex;
   align-items: center;
-  gap: 8px; /* space between label and select */
+  gap: 8px; 
 }
 
 /* Label styling */
@@ -471,38 +473,26 @@ nav a:hover {
   font-weight: 600;
   font-size: 14px;
   color: #555;
-  white-space: nowrap; /* prevent text from breaking into 2 lines */
+  white-space: nowrap; /
 }
 
 /* Stylish select dropdown */
 .filters select {
   padding: 6px 14px;
-  border-radius: 50px; /* pill shape */
+  border-radius: 50px; 
   border: none;
-  /* background-color: #f0f0f0; */
   color: #333;
   font-size: 13px;
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  /* -webkit-appearance: none;
-  -moz-appearance: none; */
-  /* min-width: 50px; consistent width */
 }
 
-/* Hover effect */
-.filters select:hover {
-  /* background-color: #e6f4ea; */
-  /* color: #2f6f3f; */
-  /* box-shadow: 0 3px 7px rgba(0,0,0,0.15); */
-}
 
 /* Focus effect */
 .filters select:focus {
   outline: none;
   background-color: #e6f4ea;
-  /* color: #2f6f3f; */
-  /* box-shadow: 0 0 5px rgba(76,175,80,0.5); */
 }
 
 .mealcard {
@@ -557,18 +547,29 @@ nav a:hover {
 /* For devices between 340px and 420px */
 @media (min-width: 320px) and (max-width: 340px) {
   .inputs input {
-    width: 35%;
+    min-width: 50px;
+    max-width:70px;
+    width: 100%;
   }
 
   .color-label {
   font-size: 15px;
 }
 }
-
-@media (min-width: 341px) and (max-width: 400px) {
-  .inputs input {
-    width: 40%;
+@media (min-width : 341px) and (max-width : 370px)
+{
+  .inputs input{
+    min-width : 20px;
+    max-width: 100px;
   }
+}
+@media (min-width: 371px) and (max-width: 400px) {
+ .inputs input {
+    min-width: 10px;
+    max-width:150px;
+    width: 100%;
+  }
+
     .color-label {
   font-size: 18px;
 }
@@ -598,7 +599,7 @@ nav a:hover {
   }
 
     .inputs input {
-    width: 50%;
+   width:50%
   }
   .form-right {
     padding: 10px;
@@ -623,6 +624,10 @@ nav a:hover {
 
   /* diet.html */
   .dietcontainer {
+    flex-direction: column;
+  }
+
+  .filters-wrapper {
     flex-direction: column;
   }
 }

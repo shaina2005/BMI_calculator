@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link
+  href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+  rel="stylesheet"
+/>
     <link rel="stylesheet" href="bmi.css" />
     <script src="bmi.js"></script>
   </head>
@@ -23,108 +27,12 @@
         </div>
       </nav>
 
-      <!-- <section>
+      <section>
         <div class="main-section">
-          <div class="main-heading">A Tool to Promote Health Awareness</div>
 
-          <h2>Check Your BMI & Get Diet Plan</h2>
-
-          <label>Age: <input type="number" id="age" /></label><br />
-          <label>
-            Gender:
-            <select id="gender">
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select> </label
-          ><br />
-          <label>Height (cm): <input type="number" id="height" /></label><br />
-          <label>Weight (kg): <input type="number" id="weight" /></label><br />
-          <label>
-            Activity Level:
-            <select id="activity">
-              <option value="1.2">Sedentary</option>
-              <option value="1.375">Light</option>
-              <option value="1.55">Moderate</option>
-              <option value="1.725">Active</option>
-              <option value="1.9">Very Active</option>
-            </select> </label
-          ><br />
-
-          <button onclick="getPlan()">Generate Diet Plan</button>
-
-          <div id="dietPlan"></div>
-
-          <style>
-            input,
-            select,
-            button {
-              margin: 5px 0;
-              padding: 8px;
-              width: 100%;
-              max-width: 300px;
-            }
-            #dietPlan {
-              margin-top: 20px;
-              background: white;
-              padding: 15px;
-              border-radius: 8px;
-            }
-          </style>
-
-          <script>
-            async function getPlan() {
-              const age = document.getElementById("age").value;
-              const gender = document.getElementById("gender").value;
-              const height = document.getElementById("height").value;
-              const weight = document.getElementById("weight").value;
-              const activity = document.getElementById("activity").value;
-              const resultDiv = document.getElementById("dietPlan");
-
-              if (!age || !height || !weight) {
-                resultDiv.textContent = "Please fill in all required fields.";
-                return;
-              }
-
-              const bmr =
-                gender === "male"
-                  ? 10 * weight + 6.25 * height - 5 * age + 5
-                  : 10 * weight + 6.25 * height - 5 * age - 161;
-
-              const targetCalories = Math.round(bmr * activity);
-              const apiKey = "5e1513225332d1c5f8347497093ec76c";
-              const url = `https://api.spoonacular.com/mealplanner/generate?timeFrame=day&targetCalories=${targetCalories}&apiKey=${apiKey}`;
-
-              try {
-                const res = await fetch(url);
-                const data = await res.json();
-
-                if (data.meals) {
-                  resultDiv.innerHTML = `
-                  <h3>Your Diet Plan for the Day (${targetCalories} kcal)</h3>
-                  <ul>
-                    ${data.meals
-                      .map(
-                        (meal) => `
-                      <li>
-                        <strong>${meal.title}</strong><br>
-                        <a href="${meal.sourceUrl}" target="_blank">View Recipe</a>
-                      </li>
-                    `
-                      )
-                      .join("")}
-                  </ul>
-                `;
-                } else {
-                  resultDiv.textContent =
-                    "No meal plan found. Please try again.";
-                }
-              } catch (err) {
-                resultDiv.textContent = "Error fetching diet plan.";
-              }
-            }
-          </script>
+          hlo
         </div>
-      </section> -->
+      </section>
     </div>
   </body>
 </html>

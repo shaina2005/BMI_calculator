@@ -4,8 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link
+  href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+  rel="stylesheet"
+/>
     <link rel="stylesheet" href="bmi.css" />
     <script src="bmi.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+
   </head>
   <body>
     <div class="nav-logo">
@@ -22,4 +28,78 @@
         </div>
         </div>
       </nav>
+
+      <section>
+        <div class="main-section ">
+           <section class="m-5 mt-10 mb-48 md:mb-0">
+      <div class="w-full h-[350px] flex flex-col md:flex-row">
+        <div
+          class="bg-white md:w-[50%] h-full sm:w-full p-5 flex justify-center items-center flex-col rounded-tl-[50px] rounded-bl-[50px] md:rounded-tl-[20px] md:rounded-bl-[20px] min-h-[200px]"
+        >
+          <p
+            class="text-gray-700 text-3xl font-bold md:text-[30px] lg:text-[40px] text-center "
+          >
+            Lets talk about BMI!
+          </p>
+          <p class="text-gray-500 text-lg md:text-[20px] lg:text-[25px] mt-2">
+            Request A callback!
+          </p>
+        </div>
+        <!-- form -->
+        <div
+          class="bg-[#2f4f3f] md:w-[50%] h-full sm:w-full p-5 rounded-tr-[50px] rounded-br-[50px] flex justify-center items-center md:rounded-tr-[20px] md:rounded-br-[20px]"
+        >
+          <form class="">
+            <div
+              class="font-semibold flex justify-center items-start text-[30px] md:text-[40px] text-white"
+            >
+              Contact
+            </div>
+            <div class="space-y-2">
+              <label class="text-xl font-medium">Name:</label>
+              <input
+                placeholder="Your Name"
+                type="text"
+                required
+                class="border border-gray-400 p-1 rounded-md min-w-[280px] overflow-hidden"
+              /><br />
+
+              <label class="text-xl font-medium">E-mail:</label>
+              <input
+                placeholder="example@gmail.com"
+                type="email"
+                required
+                class="border border-gray-400 p-1 rounded-md min-w-[280px] overflow-hidden"
+              /><br />
+
+              <label class="text-xl font-medium">Phone:</label>
+              <input
+                placeholder="123456789"
+                type="tel"
+                required
+                class="border border-gray-400 p-1 rounded-md min-w-[280px] overflow-hidden"
+              /><br />
+              <div class="flex gap-5 justify-center">
+                <button
+                  type="submit"
+                  onclick="alert('Thankyou for contacting us!')"
+                  class="bg-white p-1 rounded-lg text-[#2f4f3f] px-3 text-[18px] hover:scale-105 transition-transform duration-300  mt-2 w-24"
+                >
+                  Submit
+                </button>
+                <button
+                  onclick="alert('Form Reset successfully! Please Fill the data again')"
+                  type="reset"
+                   class="bg-white p-1 rounded-lg text-[#2f4f3f] px-3 text-[18px] hover:scale-105 transition-transform duration-300  mt-2 w-24"
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+        </div>
+      </section>
     </div></body></html>

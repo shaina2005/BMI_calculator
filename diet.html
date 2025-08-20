@@ -29,7 +29,6 @@
       <section>
         <div class="main-section">
           <div class="main-heading">What are we having today ?</div>
-
           <div class="calorie-container" id="caloriecontainer"></div>
           <p style="text-align: center; font-size: 50px">Explore More</p>
           <div class="filters-wrapper">
@@ -50,7 +49,6 @@
                 <option value="shellfish-free">Shellfish Free</option>
               </select>
             </span>
-
             <span class="filters" style="margin-left: 20px">
               <label for="cusinefilter">Cusine</label>
               <select id="cusinefilter">
@@ -102,7 +100,7 @@
                   <p>Calories : ${Math.round(bmirecipe.nutrients.calories / 3)}
                   <p> fat : ${Math.round(bmirecipe.nutrients.fat / 3)}
                   <p> Protein : ${Math.round(
-                    bmirecipe.nutrients.protien
+                    bmirecipe.nutrients.protein
                   )}<br><br>
                   <a href="${recipe.sourceUrl}" target="_blank">View Recipe</a>
                   `;

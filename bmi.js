@@ -84,11 +84,10 @@ function calculateBmi(e) {
   };
 
   sessionStorage.setItem("Bmidata", JSON.stringify(Bmidata));
+
+  document.getElementById("submit").scrollIntoView({ behavior: "smooth" });
 }
-// //scroll
-// function scrolltocalculate() {
-//   document.getElementById("calculate").scrollIntoView({ behavior: "smooth" });
-// }
+
 //reset button
 document.addEventListener("DOMContentLoaded", () => {
   const resetBtn = document.getElementById("reset");
@@ -109,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Reset BMI value and result
       document.getElementById("bmiValue").innerText = "0.0";
-      document.getElementById("bmiresult").innerText = "Your Result here";
+      document.getElementById("bmiresult").innerText = "";
 
       // Remove active class from all color-labels
       document.querySelectorAll(".color-label").forEach((category) => {
