@@ -72,14 +72,14 @@ nav a:hover {
   border-radius: 15px;
 }
 .hamburger {
-  font-size: 28px;
+  font-size: 20px;
   cursor: pointer;
   position: fixed;
-  top: 2px;
+  top: 8px;
   left: 0px;
   z-index: 100;
   display: none;
-  background-color: #2f4f3f; /* Same as nav background */
+  /* background-color: #2f4f3f;  */
   color: white;
   padding: 10px 12px;
   border: none;
