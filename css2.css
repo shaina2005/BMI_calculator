@@ -33,9 +33,10 @@
   gap: 10px;
   justify-content: center;
   align-items: center;
+  padding: 20px;
 }
 .card {
-  min-height: 250px;
+  height: 300px;
   width: 280px;
   padding: 10px;
   border-radius: 20px;
@@ -45,7 +46,7 @@
 .card .icon {
   font-size: 50px;
   text-align: center;
-  margin-top: 50px;
+  margin-top: 40px;
 }
 .card h2 {
   font-size: 1.5rem;
