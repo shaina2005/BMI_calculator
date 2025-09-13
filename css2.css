@@ -31,17 +31,25 @@
   width: 100%;
   display: flex;
   gap: 10px;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   padding: 20px;
 }
+h2 {
+  font-size: 2.5rem;
+  margin-left: 20px;
+}
 .card {
-  height: 300px;
+  min-height: 300px;
   width: 280px;
   padding: 10px;
   border-radius: 20px;
   box-shadow: 6px 10px 16px rgba(0, 0, 0, 0.25);
   border-top: 5px solid rgba(4, 67, 9, 0.399);
+  transition: 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-10px);
 }
 .card .icon {
   font-size: 50px;
@@ -55,6 +63,72 @@
 .card p {
   text-align: center;
 }
+
+/* contact page  */
+.contact-section {
+  /* max-width: 1000px; */
+  margin: 40px auto;
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+}
+
+.contact-info {
+  max-width: 400px;
+}
+
+.contact-info h2 {
+  font-size: 32px;
+  margin-bottom: 10px;
+  color: #2f4f3f;
+  font-weight: 900;
+}
+
+.contact-info p {
+  font-size: 18px;
+  margin: 12px 0;
+  display: flex;
+  align-items: center;
+}
+
+.contact-info p span {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.contact-form {
+  flex-grow: 1;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1em;
+  resize: vertical;
+}
+
+.contact-form button {
+  background-color: #2f4f3f;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.contact-form button:hover {
+  background-color: #2f4f3fe5;
+}
+
+
 @media (min-width: 320px) and (max-width: 400px) {
   .about-container {
     padding: 10px;
@@ -69,6 +143,7 @@
   .card-container {
     flex-direction: column;
     justify-content: center;
+    gap: 20px;
   }
   .card {
     min-height: 150px;
@@ -82,6 +157,12 @@
   }
   .card h2 {
     font-size: 1rem;
+  }
+  .card p {
+    font-size: 1rem;
+  }
+  .contact-section{
+    flex-direction: column;
   }
 }
 @media (min-width: 401px) and (max-width: 600px) {
@@ -97,10 +178,11 @@
   .card-container {
     flex-direction: column;
     justify-content: center;
+    gap: 20px;
   }
   .card {
     min-height: 150px;
-    width: 230px;
+    /* width: 230px; */
   }
   .card .icon {
     font-size: 25px;
@@ -110,6 +192,9 @@
   }
   .card h2 {
     font-size: 1rem;
+  }
+    .contact-section{
+    flex-direction: column;
   }
 }
 @media (min-width: 601px) and (max-width: 767px) {
@@ -126,6 +211,7 @@
   .card-container {
     flex-direction: column;
     justify-content: center;
+    gap: 40px;
   }
 }
 @media (min-width: 767px) and (max-width: 1000px) {
@@ -143,5 +229,6 @@
     flex-direction: column;
     flex: 1;
     justify-content: center;
+    gap: 50px;
   }
 }
